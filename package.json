@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "serve:c9": "vue-cli-service serve --host 0.0.0.0 --port 8080",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -13,7 +14,9 @@
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.17",
     "vue-moment": "^4.0.0",
+    "vue-numeral-filter": "^1.0.6",
     "vue-router": "^3.0.1",
+    "vue2-filters": "^0.3.0",
     "vuetify": "^1.0.19",
     "vuex": "^3.0.1"
   },

@@ -73,20 +73,20 @@
 
 export default {
   name: 'App',
-  data () {
+  data() {
     return {
       clipped: false,
       drawer: true,
       fixed: false,
       items: [{
         icon: 'bubble_chart',
-        title: 'Minutes Left'
+        title: 'Minutes Left',
       }],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'My Minutes Left'
-    }
-  }
-}
+      title: 'My Minutes Left',
+    };
+  },
+};
 </script>
