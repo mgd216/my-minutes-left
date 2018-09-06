@@ -1,11 +1,13 @@
-import Vuex from 'vuex';
-import Vue from 'vue';
-import profile from './modules/profile';
+import Vuex from 'vuex'
+import Vue from 'vue'
+import layout from './modules/layout'
+import profile from './modules/profile'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    profile,
-  },
-});
+    layout,
+    profile
+  }
+})
