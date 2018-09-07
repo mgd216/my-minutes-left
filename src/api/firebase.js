@@ -1,24 +1,25 @@
-// import db from '@/firebase/init'
-import moment from 'moment'
+import db from '@/firebase/init'
 
 export default {
-  fetchProfile () {
-    return new Promise((resolve, reject) => {
-      /* var docRef = db.collection("profiles").doc("IfLRPI0zhOnKsdXjgKBE");
+  fetchProfile
+}
 
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-          console.log(doc.data())
-          resolve(doc.data())
-        }
-        else {
-          resolve({ birthdate: null, gender: 'MALE' })
-        }
-      }).catch(function(error) {
-        console.error("Error getting document:", error);
-      }); */
+const fetchProfile = (id) => {
+  return new Promise((resolve, reject) => {
 
-      resolve({ birhdate: moment().add(10, 'years').toDate, gender: 'MALE' })
-    })
-  }
+    let docRef = db.collection("profiles").doc(id);
+
+    docRef.get().then(function(doc) {
+      if (doc.exists) {
+        console.log(doc.data())
+        resolve(doc.data())
+      }
+      else {
+        resolve({ birthdate: null, gender: 'MALE' })
+      }
+    }).catch(function(error) {
+      console.error("Error getting document:", error);
+    });
+
+  })
 }

@@ -21,15 +21,16 @@
                 >
                     <v-text-field
                     slot="activator"
-                    v-model="birthdate"
+                    :value="birthdateFormatted"
                     label="Enter Birthdate"
                     prepend-icon="event"
                     readonly
                     clearable
+                    @click:clear="checkClear"
                     ></v-text-field>
                     <v-date-picker
                         ref="picker"
-                        v-model="birthdate"
+                        :value="birthdate"
                         no-title
                         :max="new Date().toISOString().substr(0, 10)"
                         min="1950-01-01"
@@ -41,7 +42,7 @@
                 </v-flex>
                 <v-flex xs12 md6 class="pl-4">
                   <p class="gender-title">Select biological gender:</p>
-                  <v-radio-group outline v-model="gender" @change="saveGender()" row>
+                  <v-radio-group :value="gender" @change="saveGender($event)" row>
                     <v-radio label="Male" value="MALE"></v-radio>
                     <v-radio label="Female" value="FEMALE"></v-radio>
                   </v-radio-group>
@@ -53,50 +54,54 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
+    import { mapActions, mapGetters } from 'vuex'
+    import moment from 'moment'
 
-  export default {
-    name: 'ProfileForm',
-    data: () => ({
-      birthdate: null,
-      gender: 'MALE',
-      menu: false,
-      modal: false,
-      menu2: false
-    }),
-    watch: {
-      menu(val) {
-        val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'))
-      },
-      birthdate(date) {
-        this.setBirthdate(date)
-      }
-    },
-    methods: {
-      ...mapActions([
-        'fetchProfile',
-        'setBirthdate',
-        'setGender'
-      ]),
-      saveBirthdate(date) {
-        this.$refs.menu.save(date)
-      },
-      saveGender(gender) {
-        this.setGender(this.gender)
-      }
-    },
-    created() {
-      this.fetchProfile()
-    },
-    mounted() {
-
+    export default {
+        name: 'ProfileForm',
+        data: () => ({
+            menu: false,
+            modal: false,
+            menu2: false
+        }),
+        computed: {
+            ...mapGetters([
+                'birthdate',
+                'gender',
+                'isProfileComplete'
+            ]),
+            birthdateFormatted() {
+                return this.birthdate ? moment(this.birthdate).format('MM/DD/YYYY') : null;
+            }
+        },
+        watch: {
+            menu(val) {
+                val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'))
+            }
+        },
+        methods: {
+            ...mapActions([
+                'fetchProfile',
+                'setBirthdate',
+                'setGender'
+            ]),
+            saveBirthdate(date) {
+                this.$refs.menu.save(date)
+                this.setBirthdate(date)
+            },
+            saveGender(gender) {
+                this.setGender(gender)
+            },
+            checkClear() {
+                this.setBirthdate(null)
+            }
+        }
     }
-  }
 </script>
 
 <style scoped>
-  .gender-title {
-    color: #888;
-    font-size: 12px;
-  }
+    .gender-title {
+        color: #888;
+        font-size: 12px;
+    }
 </style>

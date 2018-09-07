@@ -4,19 +4,17 @@
             <v-toolbar-title>Minutes Left</v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
-        <v-card v-if="isProfileComplete">
+        <v-card>
             <v-card-text>
-                <div class="min-left-container">
+                <div v-if="isProfileComplete" class="min-left-container">
                     <doughnut-chart chart-id="min-left-chart" :chart-data="datacollection" :options="chartOptions"></doughnut-chart>
                     <div class="min-left-label">
                         <div class="min-label">Minutes Left:<br>{{minutesLeft | numeral('0,0')}}</div>
                     </div>
                 </div>
-            </v-card-text>
-        </v-card>
-        <v-card v-else>
-            <v-card-text>
-                <h3>Please complete your profile.</h3>
+                <div v-else class="ma-5 text-xs-center">
+                    <h3>Please complete your profile.</h3>
+                </div>
             </v-card-text>
         </v-card>
     </div>

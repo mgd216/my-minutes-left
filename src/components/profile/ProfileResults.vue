@@ -25,7 +25,7 @@
                 </v-flex>
             </v-layout>
             </div>
-            <div v-else class="ma10">
+            <div v-else class="ma-5 text-xs-center">
                 <h3>Please complete your profile.</h3>
             </div>
         </v-card-text>
@@ -34,21 +34,21 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+    import { mapGetters } from 'vuex'
 
-export default {
-  name: 'ProfileResults',
-  computed: {
-    ...mapGetters([
-      'estimatedAge',
-      'estimatedMinutes',
-      'gender',
-      'isProfileComplete',
-      'minutesLeft',
-      'minutesOld'
-    ])
-  }
-}
+    export default {
+        name: 'ProfileResults',
+        computed: {
+            ...mapGetters([
+                'estimatedAge',
+                'estimatedMinutes',
+                'gender',
+                'isProfileComplete',
+                'minutesLeft',
+                'minutesOld'
+            ])
+        }
+    }
 </script>
 
 <style>

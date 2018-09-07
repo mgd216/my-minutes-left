@@ -1,0 +1,93 @@
+[debug] [2018-09-07T15:27:50.004Z] ----------------------------------------------------------------------
+[debug] [2018-09-07T15:27:50.006Z] Command:       /home/ec2-user/.nvm/versions/node/v10.5.0/bin/node /home/ec2-user/.nvm/versions/node/v10.5.0/bin/firebase init
+[debug] [2018-09-07T15:27:50.006Z] CLI Version:   4.2.1
+[debug] [2018-09-07T15:27:50.006Z] Platform:      linux
+[debug] [2018-09-07T15:27:50.006Z] Node Version:  v10.5.0
+[debug] [2018-09-07T15:27:50.016Z] Time:          Fri Sep 07 2018 15:27:50 GMT+0000 (Coordinated Universal Time)
+[debug] [2018-09-07T15:27:50.016Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-09-07T15:27:50.029Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase"]
+[debug] [2018-09-07T15:27:50.029Z] > authorizing via signed-in user
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /home/ec2-user/environment/my-minutes-left
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2018-09-07T15:28:05.820Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-09-07T15:28:05.820Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+
+[debug] [2018-09-07T15:28:05.903Z] <<< HTTP RESPONSE 200
+[debug] [2018-09-07T15:28:05.907Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects  
+ 
+[debug] [2018-09-07T15:28:06.597Z] <<< HTTP RESPONSE 200
+[info] 
+=== Firestore Setup
+[debug] [2018-09-07T15:28:22.406Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-09-07T15:28:22.406Z] > authorizing via signed-in user
+[debug] [2018-09-07T15:28:22.406Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-09-07T15:28:22.407Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+
+[debug] [2018-09-07T15:28:22.520Z] <<< HTTP RESPONSE 200
+[debug] [2018-09-07T15:28:22.524Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/my-minutes-left  
+ 
+[debug] [2018-09-07T15:28:22.722Z] <<< HTTP RESPONSE 200
+[info] 
+[info] Firestore Security Rules allow you to define how and when to allow
+[info] requests. You can keep these rules in your project directory
+[info] and publish them with firebase deploy.
+[info] 
+[debug] [2018-09-07T15:28:25.696Z] >>> HTTP REQUEST GET https://firebaserules.googleapis.com/v1/projects/my-minutes-left/releases  
+ 
+[debug] [2018-09-07T15:28:25.905Z] <<< HTTP RESPONSE 200
+[debug] [2018-09-07T15:28:25.907Z] Found ruleset: projects/my-minutes-left/rulesets/f23719ad-04a8-45fc-8a17-16bdcc2f9846
+[debug] [2018-09-07T15:28:25.908Z] >>> HTTP REQUEST GET https://firebaserules.googleapis.com/v1/projects/my-minutes-left/rulesets/f23719ad-04a8-45fc-8a17-16bdcc2f9846  
+ 
+[debug] [2018-09-07T15:28:26.078Z] <<< HTTP RESPONSE 200
+[info] 
+[info] Firestore indexes allow you to perform complex queries while
+[info] maintaining performance that scales with the size of the result
+[info] set. You can keep index definitions in your project directory
+[info] and publish them with firebase deploy.
+[info] 
+[debug] [2018-09-07T15:28:28.296Z] >>> HTTP REQUEST GET https://firestore.googleapis.com/v1beta1/projects/my-minutes-left/databases/(default)/indexes  
+ 
+[debug] [2018-09-07T15:28:28.573Z] <<< HTTP RESPONSE 200
+[info] 
+=== Functions Setup
+[info] 
+[info] A functions directory will be created in your project with a Node.js
+[info] package pre-configured. Functions can be deployed with firebase deploy.
+[info] 
+[debug] [2018-09-07T15:28:28.581Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-09-07T15:28:28.581Z] > authorizing via signed-in user
+[debug] [2018-09-07T15:28:28.581Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/my-minutes-left  
+ 
+[debug] [2018-09-07T15:28:28.742Z] <<< HTTP RESPONSE 200
+[debug] [2018-09-07T15:28:28.746Z] >>> HTTP REQUEST PATCH https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/my-minutes-left?updateMask=usageSettings  
+
+[debug] [2018-09-07T15:28:28.747Z] >>> HTTP REQUEST PATCH https://servicemanagement.googleapis.com/v1/services/runtimeconfig.googleapis.com/projectSettings/my-minutes-left?updateMask=usageSettings  
+
+[debug] [2018-09-07T15:28:29.839Z] <<< HTTP RESPONSE 200
+[debug] [2018-09-07T15:28:30.062Z] <<< HTTP RESPONSE 200
+[info] ✔  Wrote functions/package.json
+[info] ✔  Wrote functions/index.js
+[info] 
+=== Hosting Setup
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 

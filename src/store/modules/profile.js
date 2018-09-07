@@ -8,8 +8,8 @@ const AGES = {
 const MINUTES_IN_A_YEAR = 525600
 
 const state = {
-  birthdate: null,
-  gender: 'MALE'
+  birthdate: window.localStorage.getItem('birthdate'),
+  gender: window.localStorage.getItem('gender') || 'MALE'
 }
 
 const getters = {
@@ -24,18 +24,21 @@ const getters = {
 }
 
 const actions = {
-  fetchProfile ({ commit, dispatch }) {
-    db.fetchProfile()
+  fetchProfile({ commit, dispatch }, id) {
+    db.fetchProfile(id)
       .then((profile) => {
+        console.log(profile)
         dispatch('setBirthdate', profile.birthdate)
         dispatch('setGender', profile.gender)
       })
       .catch(err => console.error(err))
   },
-  setBirthdate ({ commit }, birthdate) {
+  setBirthdate({ commit }, birthdate) {
+    window.localStorage.setItem('birthdate', birthdate)
     commit('SET_BIRTHDATE', birthdate)
   },
-  setGender ({ commit }, gender) {
+  setGender({ commit }, gender) {
+    window.localStorage.setItem('gender', gender)
     commit('SET_GENDER', gender)
   }
 }
