@@ -1,10 +1,10 @@
 <template>
-   <v-container grid-list-md fluid fill-height>
+   <v-container grid-list-md fluid>
     <v-layout row wrap>
-      <v-flex xs6 fill-height justify-space-between>
-        <MinLeftDoughnutChart />
+      <v-flex xs12 md6 fill-height justify-space-between>
+        <MinLeftCard />
       </v-flex>
-      <v-flex xs6 fill-height justify-space-between>
+      <v-flex xs12 md6 fill-height justify-space-between>
         <v-layout column>
           <v-flex>
             <ProfileForm />
@@ -19,14 +19,14 @@
 </template>
 
 <script>
-  import MinLeftDoughnutChart from '@/components/visualization/MinLeftDoughnutChart.vue'
+  import MinLeftCard from '@/components/visualization/MinLeftCard.vue'
   import ProfileForm from '@/components/profile/ProfileForm.vue'
   import ProfileResults from '@/components/profile/ProfileResults.vue'
 
   export default {
     name: 'Home',
     components: {
-      MinLeftDoughnutChart,
+      MinLeftCard,
       ProfileForm,
       ProfileResults
     }

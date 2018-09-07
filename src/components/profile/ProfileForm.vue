@@ -1,10 +1,9 @@
 <template>
   <div>
-    <v-toolbar color="blue" dark>
-      <v-toolbar-title>My Profile</v-toolbar-title>
-      <v-spacer></v-spacer>
-    </v-toolbar>
     <v-card>
+        <v-card-title class="blue white--text">
+          <span class="headline">My Profile</span>
+        </v-card-title>
         <v-card-text>
             <v-layout row wrap>
                 <v-flex xs12 md6>

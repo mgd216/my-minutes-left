@@ -1,20 +1,17 @@
 <template>
     <div class="min-left-container">
-        <doughnut-chart chart-id="min-left-chart" :chart-data="datacollection" :options="chartOptions"></doughnut-chart>
-        <div class="min-left-label">
-            <div class="min-label">Minutes Left:<br>{{minutesLeft | numeral('0,0')}}</div>
-        </div>
+        <pie-chart chart-id="min-left-chart" :chart-data="datacollection" :options="chartOptions"></pie-chart>
     </div>
 </template>
 
 <script>
     import { mapGetters } from 'vuex'
-    import DoughnutChart from '@/components/charts/DoughnutChart.js'
+    import PieChart from '@/components/charts/PieChart.js'
 
     export default {
-        name: 'MinLeftDoughnutChart',
+        name: 'MinLeftPieChart',
         components: {
-            DoughnutChart
+            PieChart
         },
         data() {
             return {
@@ -66,24 +63,6 @@
         height: 100%;
         text-align: center;
         position: relative;
-    }
-
-    .min-left-label {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        text-align: center;
-        font-size: 2em;
-    }
-
-    .min-label {
-        top: 45%;
-        margin-left: auto;
-        margin-right: auto;
-        width: 100%;
-        position: absolute;
     }
 
     #min-left-chart {

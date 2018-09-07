@@ -1,10 +1,9 @@
 <template>
     <div>
-            <v-toolbar color="blue" dark>
-      <v-toolbar-title>My Profile Results</v-toolbar-title>
-      <v-spacer></v-spacer>
-    </v-toolbar>
     <v-card>
+        <v-card-title class="blue white--text">
+          <span class="headline">My Profile Results</span>
+        </v-card-title>
         <v-card-text>
             <div v-if="isProfileComplete">
             <v-layout row wrap>
