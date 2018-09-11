@@ -16,6 +16,9 @@
               <v-list-tile @click="loadViz('MinLeftDoughnutChart')">
                 <v-list-tile-title>Doughnut Chart</v-list-tile-title>
               </v-list-tile>
+              <v-list-tile @click="loadViz('MinLeftGaugeChart')">
+                <v-list-tile-title>Gauge Chart</v-list-tile-title>
+              </v-list-tile>
               <v-list-tile @click="loadViz('MinLeftPieChart')">
                 <v-list-tile-title>Pie Chart</v-list-tile-title>
               </v-list-tile>
@@ -40,6 +43,7 @@
 <script>
     import { mapActions, mapGetters } from 'vuex'
     import MinLeftDoughnutChart from '@/components/visualization/MinLeftDoughnutChart.vue'
+    import MinLeftGaugeChart from '@/components/visualization/MinLeftGaugeChart.vue'
     import MinLeftPieChart from '@/components/visualization/MinLeftPieChart.vue'
     import MinLeftProgress from '@/components/visualization/MinLeftProgress.vue'
 
@@ -47,6 +51,7 @@
         name: 'MinLeftCard',
         components: {
             MinLeftDoughnutChart,
+            MinLeftGaugeChart,
             MinLeftPieChart,
             MinLeftProgress
         },

@@ -27,28 +27,27 @@
 </template>
 
 <script>
-    import { mapGetters, mapActions } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
 
-    export default {
-        name: 'AppHeader',
-        data: () => ({
-            showNav: false,
-        }),
-        computed: {
-            ...mapGetters([
-                'isClipped',
-                'isNavVisible',
-                'isMiniNav',
-                'navItems'
-            ])
-        },
-        watch: {
-            isNavVisible(val) {
-                console.log("IS NAV VISIBLE:", val);
-                if (val) {
-                    this.showNav = val;
-                }
-            }
+  export default {
+    name: 'AppHeader',
+    data: () => ({
+      showNav: false,
+    }),
+    computed: {
+      ...mapGetters([
+        'isClipped',
+        'isNavVisible',
+        'isMiniNav',
+        'navItems'
+      ])
+    },
+    watch: {
+      isNavVisible(val) {
+        if (val) {
+          this.showNav = val;
         }
+      }
     }
+  }
 </script>

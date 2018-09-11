@@ -1,5 +1,6 @@
-import db from '@/api/firebase'
+import { db } from '../../config/firebaseConfig'
 import moment from 'moment'
+import router from '../../router'
 
 const AGES = {
   male: 80,
@@ -8,6 +9,7 @@ const AGES = {
 const MINUTES_IN_A_YEAR = 525600
 
 const state = {
+  userId: null,
   birthdate: window.localStorage.getItem('birthdate'),
   gender: window.localStorage.getItem('gender') || 'MALE'
 }
@@ -24,23 +26,47 @@ const getters = {
 }
 
 const actions = {
-  fetchProfile({ commit, dispatch }, id) {
-    db.fetchProfile(id)
-      .then((profile) => {
-        console.log(profile)
-        dispatch('setBirthdate', profile.birthdate)
-        dispatch('setGender', profile.gender)
+  clearProfile({ commit, dispatch }) {
+    dispatch('setBirthdate', null);
+    dispatch('setGender', 'MALE')
+  },
+  createProfile({ commit, dispatch }, user) {
+    let ref = db.collection('profiles').doc(user.uid)
+    let profile = {
+      userId: user.uid,
+      birthdate: null,
+      gender: 'MALE'
+    }
+    ref.set(profile)
+      .then(() => {
+        dispatch('updateProfile', profile)
+        router.push('/')
       })
-      .catch(err => console.error(err))
+      .catch(err => {
+        console.error(err)
+      })
+  },
+  fetchProfile({ commit, dispatch }, user) {
+    let ref = db.collection('profiles').doc(user.uid)
+    ref.get()
+      .then(doc => {
+        dispatch('updateProfile', doc.data())
+      })
+  },
+  updateProfile({ commit, dispatch }, profile) {
+    dispatch('setUserId', profile.userId)
+    dispatch('setBirthdate', profile.birthdate);
+    dispatch('setGender', profile.gender)
   },
   setBirthdate({ commit }, birthdate) {
-    window.localStorage.setItem('birthdate', birthdate)
     commit('SET_BIRTHDATE', birthdate)
   },
   setGender({ commit }, gender) {
-    window.localStorage.setItem('gender', gender)
     commit('SET_GENDER', gender)
-  }
+  },
+  setUserId({ commit }, userId) {
+    commit('SET_USER_ID', userId)
+  },
 }
 
 const mutations = {
@@ -49,7 +75,10 @@ const mutations = {
   },
   SET_GENDER: (state, gender) => {
     state.gender = gender
-  }
+  },
+  SET_USER_ID: (state, userId) => {
+    state.userId = userId
+  },
 }
 
 export default {

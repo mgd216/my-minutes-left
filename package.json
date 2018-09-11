@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-beta.49",
+    "canvas-gauges": "^2.1.5-radial",
     "chart.js": "^2.7.2",
     "firebase": "^5.4.2",
     "numeral": "^2.0.6",

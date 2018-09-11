@@ -6,6 +6,21 @@
       </v-btn>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
+      <div v-if="isLoggedIn">
+        <v-menu offset-y>
+        <v-avatar size="36px" slot="activator">
+            <v-icon>face</v-icon>
+        </v-avatar>
+          <v-list>
+            <v-list-tile @click="logout">
+              <v-list-tile-title>Logout</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
+      </div>
+      <div v-else>
+        <v-btn small color="primary" to="/login">Login</v-btn>
+      </div>
     </v-toolbar>
 </template>
 
@@ -17,15 +32,17 @@
         computed: {
             ...mapGetters([
                 'isClipped',
+                'isLoggedIn',
                 'isMiniNav',
-                'title'
+                'title',
             ])
         },
         methods: {
             ...mapActions([
-                'showNav',
+                'hideMiniNav',
+                'logout',
                 'showMiniNav',
-                'hideMiniNav'
+                'showNav',
             ]),
             toggleMiniNav() {
                 this.isMiniNav ? this.hideMiniNav() : this.showMiniNav()

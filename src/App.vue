@@ -10,16 +10,16 @@
 </template>
 
 <script>
-import AppFooter from '@/components/layout/AppFooter.vue'
-import AppHeader from '@/components/layout/AppHeader.vue'
-import AppNav from '@/components/layout/AppNav.vue'
+  import AppFooter from '@/components/layout/AppFooter.vue'
+  import AppHeader from '@/components/layout/AppHeader.vue'
+  import AppNav from '@/components/layout/AppNav.vue'
 
-export default {
-  name: 'App',
-  components: {
-    AppFooter,
-    AppHeader,
-    AppNav
+  export default {
+    name: 'App',
+    components: {
+      AppFooter,
+      AppHeader,
+      AppNav,
+    }
   }
-}
 </script>
