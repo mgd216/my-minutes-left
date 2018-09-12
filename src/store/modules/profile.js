@@ -55,7 +55,7 @@ const actions = {
   },
   updateProfile({ commit, dispatch }, profile) {
     dispatch('setUserId', profile.userId)
-    dispatch('setBirthdate', profile.birthdate);
+    dispatch('setBirthdate', profile.birthdate)
     dispatch('setGender', profile.gender)
   },
   setBirthdate({ commit }, birthdate) {
