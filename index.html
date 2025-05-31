@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Minutes Left</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        .gradient-background {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        /* Custom style for the result to make it pop */
+        .result-text {
+            font-size: 2.5rem; /* Default large size */
+            line-height: 1.2;
+            font-weight: 700;
+            color: #ffffff; /* White text for contrast on gradient */
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        /* Responsive font size for smaller screens */
+        @media (max-width: 640px) {
+            .result-text {
+                font-size: 1.8rem; /* Smaller font for mobile */
+            }
+            .input-container label, .input-container input, .input-container button {
+                font-size: 0.9rem;
+            }
+        }
+        .info-box {
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .info-box.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Message box styling */
+        .message-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f8d7da; /* Light red for errors */
+            color: #721c24; /* Dark red text */
+            padding: 1rem 1.5rem;
+            border-radius: 0.375rem; /* rounded-md */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none; /* Hidden by default */
+            font-size: 0.9rem;
+            max-width: 90%;
+            text-align: center;
+        }
+        .message-box.success {
+            background-color: #d1e7dd; /* Light green for success/info */
+            color: #0f5132; /* Dark green text */
+        }
+    </style>
+</head>
+<body class="gradient-background min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 text-gray-800">
+
+    <div id="messageBox" class="message-box"></div>
+
+    <main class="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg shadow-2xl rounded-xl p-6 sm:p-10 w-full max-w-lg text-center">
+        <header class="mb-6 sm:mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-white mb-2">My Minutes Left</h1>
+            <p class="text-sm sm:text-base text-gray-200">Estimate the minutes remaining in an average lifespan.</p>
+        </header>
+
+        <section class="input-container mb-6 sm:mb-8">
+            <label for="birthDate" class="block text-sm font-medium text-gray-100 mb-2">Enter your Date of Birth:</label>
+            <input type="date" id="birthDate" name="birthDate"
+                   class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out text-gray-700"
+                   required>
+        </section>
+
+        <button id="calculateButton"
+                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition duration-150 ease-in-out transform hover:scale-105">
+            Calculate Remaining Minutes
+        </button>
+
+        <section id="resultSection" class="mt-6 sm:mt-8 min-h-[120px] sm:min-h-[150px] flex flex-col justify-center items-center">
+            </section>
+
+        <footer class="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-300 border-opacity-50">
+            <p class="text-xs sm:text-sm text-gray-200">
+                Based on a global average life expectancy of <span id="avgLifespanYears" class="font-semibold"></span> years.
+                This is a statistical estimate and not a personal prediction.
+            </p>
+        </footer>
+    </main>
+
+    <script>
+        // Configuration
+        const AVERAGE_LIFESPAN_YEARS = 73.4; // Global average life expectancy (e.g., UN WPP 2022 for 2023)
+        const AVG_DAYS_PER_YEAR = 365.25; // Accounts for leap years
+        const MINUTES_IN_DAY = 24 * 60;
+        const TOTAL_LIFESPAN_MINUTES = AVERAGE_LIFESPAN_YEARS * AVG_DAYS_PER_YEAR * MINUTES_IN_DAY;
+
+        // DOM Elements
+        const birthDateInput = document.getElementById('birthDate');
+        const calculateButton = document.getElementById('calculateButton');
+        const resultSection = document.getElementById('resultSection');
+        const avgLifespanYearsDisplay = document.getElementById('avgLifespanYears');
+        const messageBox = document.getElementById('messageBox');
+
+        // Set the average lifespan display
+        if (avgLifespanYearsDisplay) {
+            avgLifespanYearsDisplay.textContent = AVERAGE_LIFESPAN_YEARS;
+        }
+
+        // Function to show messages
+        function showMessage(message, type = 'error', duration = 4000) {
+            if (!messageBox) return;
+            messageBox.textContent = message;
+            messageBox.className = 'message-box'; // Reset classes
+            if (type === 'success') {
+                messageBox.classList.add('success');
+            }
+            messageBox.style.display = 'block';
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+            }, duration);
+        }
+
+        // Function to calculate and display remaining minutes
+        function calculateRemainingMinutes() {
+            const birthDateString = birthDateInput.value;
+
+            // --- Input Validation ---
+            if (!birthDateString) {
+                showMessage('Please enter your date of birth.');
+                resultSection.innerHTML = ''; // Clear previous results
+                return;
+            }
+
+            const birthDate = new Date(birthDateString);
+            const now = new Date();
+
+            if (birthDate.getTime() > now.getTime()) {
+                showMessage('Birth date cannot be in the future. Please enter a valid date.');
+                resultSection.innerHTML = ''; // Clear previous results
+                return;
+            }
+            
+            // Check if birthDate is a valid date object after parsing
+            if (isNaN(birthDate.getTime())) {
+                showMessage('Invalid date format. Please use YYYY-MM-DD.');
+                resultSection.innerHTML = '';
+                return;
+            }
+
+
+            // --- Calculations ---
+            const ageInMilliseconds = now.getTime() - birthDate.getTime();
+            const ageInMinutes = ageInMilliseconds / (1000 * 60);
+
+            const remainingMinutes = TOTAL_LIFESPAN_MINUTES - ageInMinutes;
+
+            // --- Display Results ---
+            resultSection.innerHTML = ''; // Clear previous results before adding new ones
+
+            const resultContainer = document.createElement('div');
+            resultContainer.classList.add('info-box'); // For transition
+
+            if (remainingMinutes > 0) {
+                const remainingMinutesFormatted = Math.round(remainingMinutes).toLocaleString('en-US');
+                const p1 = document.createElement('p');
+                p1.className = 'text-lg text-gray-100 mb-1';
+                p1.textContent = 'You have an estimated';
+                resultContainer.appendChild(p1);
+
+                const h2 = document.createElement('h2');
+                h2.className = 'result-text'; // Apply custom class for large text
+                h2.textContent = `${remainingMinutesFormatted}`;
+                resultContainer.appendChild(h2);
+
+                const p2 = document.createElement('p');
+                p2.className = 'text-lg text-gray-100 mt-1';
+                p2.textContent = 'minutes remaining.';
+                resultContainer.appendChild(p2);
+
+            } else {
+                const p = document.createElement('p');
+                p.className = 'text-xl font-semibold text-yellow-300'; // Different color for this message
+                p.textContent = `Congratulations! You've lived past the average of ${AVERAGE_LIFESPAN_YEARS} years.`;
+                resultContainer.appendChild(p);
+                
+                const minutesPast = Math.abs(Math.round(remainingMinutes)).toLocaleString('en-US');
+                const p2 = document.createElement('p');
+                p2.className = 'text-md text-gray-200 mt-2';
+                p2.textContent = `That's ${minutesPast} minutes beyond the average!`;
+                resultContainer.appendChild(p2);
+            }
+            
+            resultSection.appendChild(resultContainer);
+            // Trigger the animation
+            setTimeout(() => {
+                resultContainer.classList.add('visible');
+            }, 10); // Small delay to ensure CSS transition applies
+        }
+
+        // Event Listener for the button
+        if (calculateButton) {
+            calculateButton.addEventListener('click', calculateRemainingMinutes);
+        }
+
+        // Optional: Allow calculation by pressing Enter in the date field
+        if (birthDateInput) {
+            birthDateInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    calculateRemainingMinutes();
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
